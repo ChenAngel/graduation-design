@@ -35,4 +35,6 @@ public interface BookService {
 
     public List<Book> searchAll();
 
+    public Book searchById(Integer id);
+
 }

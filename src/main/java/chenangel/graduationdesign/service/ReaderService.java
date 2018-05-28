@@ -27,4 +27,6 @@ public interface ReaderService {
     public Reader searchById(Integer id);
 
     public List<BorrowHistory> searchHistoryById(Integer readerid);
+
+    public Reader searchInfoById(Integer readerid);
 }

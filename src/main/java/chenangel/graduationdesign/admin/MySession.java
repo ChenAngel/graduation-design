@@ -26,6 +26,7 @@ public class MySession {
     }
 
     public static Object getAttr(String key){
+        init();
         return attrfields.get(key);
     }
 

@@ -3,12 +3,14 @@ package chenangel.graduationdesign.service.impl;
 import chenangel.graduationdesign.generator.mapper.BookMapper;
 import chenangel.graduationdesign.generator.mapper.OrderMapper;
 import chenangel.graduationdesign.generator.model.Book;
+import chenangel.graduationdesign.generator.model.Order;
 import chenangel.graduationdesign.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,5 +40,10 @@ public class OrderServiceImpl implements OrderService {
             return sign==0?null:uuid;
         }
 
+    }
+
+    @Override
+    public List<Order> saerchByRid(Integer rid) {
+        return orderMapper.selectbyrid(rid);
     }
 }

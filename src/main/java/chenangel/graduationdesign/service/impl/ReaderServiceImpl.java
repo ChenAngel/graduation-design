@@ -68,6 +68,12 @@ public class ReaderServiceImpl implements ReaderService{
 
     @Override
     public List<BorrowHistory> searchHistoryById(Integer readerid) {
-        return historyMapper.selectbyrid(readerid);
+        List<BorrowHistory> borrowHistories = historyMapper.selectbyrid(readerid);
+        return borrowHistories;
+    }
+
+    @Override
+    public Reader searchInfoById(Integer readerid) {
+        return readerMapper.selectbyid(readerid);
     }
 }

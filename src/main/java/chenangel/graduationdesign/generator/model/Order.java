@@ -5,7 +5,7 @@ public class Order {
     private String order_uuid;
     private Integer order_rid;
     private Integer order_aid;
-    private Integer status;
+    private String status;
     private String addtime;
     private String bookname;
 
@@ -41,11 +41,11 @@ public class Order {
         this.order_aid = order_aid;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

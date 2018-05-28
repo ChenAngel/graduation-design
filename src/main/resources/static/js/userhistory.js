@@ -1,9 +1,11 @@
 $(document).ready(function(){
     var url = "http://localhost:8080/reader/borrowhistory";
     var html = "";
+    var recenttable = $("#recenttable");
     $.post(url,{},
         function(data){
-            data.forEach(historyprint)
+            data.forEach(historyprint);
+            recenttable.html(html);
         },"json");
     
     function historyprint(data) {

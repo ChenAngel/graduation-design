@@ -37,4 +37,9 @@ public class BookServiceImpl implements BookService {
     public List<Book> searchAll() {
         return bookMapper.selectall();
     }
+
+    @Override
+    public Book searchById(Integer id) {
+        return bookMapper.selectbyid(id);
+    }
 }
