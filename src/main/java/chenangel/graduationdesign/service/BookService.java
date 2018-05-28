@@ -3,6 +3,7 @@ package chenangel.graduationdesign.service;
 import chenangel.graduationdesign.generator.model.Book;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookService {
     public boolean addBook(String bookname,
@@ -15,6 +16,7 @@ public interface BookService {
                            String location,
                            Integer borrowacount,
                            Integer nowaccount,
+                           Integer totalaccount,
                            Double price);
 
     public boolean delBookById(Integer id);
@@ -37,5 +39,7 @@ public interface BookService {
 
     public Book searchById(Integer id);
 
+    public Map typeCount();
 
+    public List<Map> hotestbookTop10();
 }

@@ -36,12 +36,13 @@ public class BookController {
                           @RequestParam("remark") String remark,
                           @RequestParam("nowaccount") Integer nowaccount,
                           @RequestParam("borrowacount") Integer borrowacount,
+                          @RequestParam("totalaccount") Integer totalaccount,
                           @RequestParam("location") String location,
                           @RequestParam("price") Double price) {
 
         String msg = new String();
         try {
-            boolean sign = this.bookService.addBook(bookname,type,writer,press,pressdate,remark,isbn,location,borrowacount,nowaccount,price);
+            boolean sign = this.bookService.addBook(bookname,type,writer,press,pressdate,remark,isbn,location,borrowacount,nowaccount,totalaccount,price);
             if (sign) {
                 msg = "添加成功";
             } else {

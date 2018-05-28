@@ -5,13 +5,14 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BookMapper {
     @Select("select * from books")
     List<Book> selectall();
 
-    @Insert("insert into books values(null,#{bookname},#{type},#{writer},#{press},#{pressdate},#{remark},#{price},#{isbn},#{borrowacount},#{nowaccount},#{location})")
+    @Insert("insert into books values(null,#{bookname},#{type},#{writer},#{press},#{pressdate},#{remark},#{price},#{isbn},#{borrowacount},#{nowaccount},#{location},#{addtime},#{totalaccount})")
     int insertbook(@Param("bookname") String bookname,
                    @Param("type") String type,
                    @Param("writer") String writer,
@@ -20,8 +21,10 @@ public interface BookMapper {
                    @Param("remark") String remark,
                    @Param("isbn") String isbn,
                    @Param("location") String location,
+                   @Param("addtime") String addtime,
                    @Param("borrowacount") Integer borrowacount,
                    @Param("nowaccount") Integer nowaccount,
+                   @Param("totalaccount") Integer totalaccount,
                    @Param("price") Double price);
 
     @Delete("delete from books where id = #{id}")
@@ -50,4 +53,10 @@ public interface BookMapper {
 
     @Select("select * from books where id = #{id}")
     Book selectbyid(@Param("id") Integer id);
+
+    @Select("select count(*) as total,type from books group by type")
+    List<Map> typecount();
+
+    @Select("select isbn,bookname,writer,borrowacount from books order by borrowacount desc limit 0,10")
+    List<Map> hotestTop10();
 }

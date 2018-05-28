@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -74,5 +71,20 @@ public class OrderServiceImpl implements OrderService {
             return orders;
         }
         return null;
+    }
+
+    @Override
+    public Map rencentBorrow() {
+        List<Map> mapList = orderMapper.selectrecentborrow();
+        Map result = new HashMap();
+        List<String> dateList = new LinkedList<>();
+        List<Long> totalList = new LinkedList<>();
+        for (Map temmap:mapList) {
+            dateList.add((String) temmap.get("time"));
+            totalList.add((Long) temmap.get("total"));
+        }
+        result.put("datelist",dateList);
+        result.put("countlist",totalList);
+        return result;
     }
 }

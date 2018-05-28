@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface OrderMapper {
@@ -27,4 +28,9 @@ public interface OrderMapper {
 
     @Select("select * from orders where order_rid = #{rid} and status = 'borrowing'")
     List<Order> selectbyidandstatus(@Param("rid")Integer rid);
+
+    @Select("SELECT DATE_FORMAT(addtime,'%Y/%m/%d') as time,count(*) as total " +
+            "from orders where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= addtime " +
+            "group by DATE_FORMAT(addtime,'%Y %m %d')")
+    List<Map> selectrecentborrow();
 }

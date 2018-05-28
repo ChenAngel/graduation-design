@@ -1,31 +1,31 @@
 $(document).ready(function(){
-    var url = "http://localhost:8080/recent10";
+    var url = "http://localhost:8080/admin/hotbook";
     var html = "";
     var result = $("#recenttable");
     $.post(url,{},
         function(data){
-            data    .forEach(uploadsprint);
+            data.forEach(uploadsprint);
             result.html(html);
     });
 
     function uploadsprint(data) {
         html = html + "<tr>" +
-            "                            <th>" + data.id + "</th>" +
-            "                            <th>" + data.username + "</th>" +
-            "                            <th>" + data.filename + "</th>" +
-            "                            <th>" + data.uploadtime + "</th>" +
+            "                            <th>" + data.isbn + "</th>" +
+            "                            <th>" + data.bookname + "</th>" +
+            "                            <th>" + data.writer + "</th>" +
+            "                            <th>" + data.borrowacount + "</th>" +
             "                        </tr>";
     }
 
     var ctx = document.getElementById("myChart").getContext('2d');
-    $.post("http://localhost:8080/dateline",{},
+    $.post("http://localhost:8080/admin/recentborrow",{},
         function(data){
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data:{
                     labels: data.datelist,
                     datasets: [{
-                        label: '上传量',
+                        label: '借阅量',
                         data: data.countlist,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -59,14 +59,14 @@ $(document).ready(function(){
         });
 
     var pie = document.getElementById("pie").getContext('2d');
-    $.post("http://localhost:8080/10/1/searchall",{},
+    $.post("http://localhost:8080/admin/bookcount",{},
         function(data){
             var myLineChart = new Chart(pie, {
                 type: 'pie',
                 data:{
-                    labels: ["库存","空闲空间"],
+                    labels: data.typelist,
                     datasets: [{
-                        data: [data.total,500-data.total],
+                        data: data.totallist,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
