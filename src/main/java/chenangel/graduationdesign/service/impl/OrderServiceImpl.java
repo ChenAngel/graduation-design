@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -45,5 +46,33 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> saerchByRid(Integer rid) {
         return orderMapper.selectbyrid(rid);
+    }
+
+    /**
+     * 搜索order表，寻找对应的rid的ok状态
+     * @param rid
+     * @return
+     */
+    @Override
+    public List<Order> searchNowBorrow(Integer rid) {
+        List<Order> orders = orderMapper.selectbyidandstatus(rid);
+        if (orders!=null) {
+            for (Order order:orders) {
+                String addtime = order.getAddtime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar calendar = Calendar.getInstance();
+                try {
+                    Date adddate = simpleDateFormat.parse(addtime);
+                    calendar.setTime(adddate);
+                    calendar.add(Calendar.MONTH,+1);
+                    Date returndate = calendar.getTime();
+                    order.setReturntime(simpleDateFormat.format(returndate));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return orders;
+        }
+        return null;
     }
 }

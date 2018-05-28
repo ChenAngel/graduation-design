@@ -15,8 +15,12 @@ $(document).ready(function(){
             "                            <th>" + data.bookname + "</th>";
         if (data.status=="open"){
             html += "<th>预约完成，请速取</th></tr>";
-        }else if (data.status=="ok"){
+        }else if (data.status=="borrowing"){
             html += "<th>借阅成功</th></tr>";
+        }else if (data.status=="over"){
+            html += "<th>逾期未还</th></tr>";
+        }else if (data.status=="ok"){
+            html += "<th>已归还</th></tr>";
         }
     }
 })

@@ -35,7 +35,7 @@ public class ReaderController {
             MySession.setAttr("readerid",reader.getReaderid());
             return "登录成功";
         }else {
-            return "登录失败";
+            return "用户名或密码错误";
         }
     }
 
@@ -63,6 +63,29 @@ public class ReaderController {
     @ResponseBody
     public List<Order> orderinfo() throws Exception{
         List<Order> orders = orderService.saerchByRid((Integer) MySession.getAttr("rid"));
+        return orders;
+    }
+
+    @RequestMapping(value = "/{password1}/{password2}/resetps", method = RequestMethod.POST)
+    @ResponseBody
+    public String resetps(@PathVariable("password1") String password1,
+                          @PathVariable("password2") String password2) throws Exception{
+        Integer rid = (Integer) MySession.getAttr("rid");
+        if (!password1.equals(password2)) {
+            return "两次输入的密码不一致";
+        }
+        boolean sign = readerService.resetps(rid,password1);
+        if (sign) {
+            return "修改成功";
+        }else{
+            return "修改失败，未知错误";
+        }
+    }
+
+    @RequestMapping(value = "/searchborrowing", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Order> borrowing() throws Exception{
+        List<Order> orders = orderService.searchNowBorrow((Integer) MySession.getAttr("rid"));
         return orders;
     }
 }

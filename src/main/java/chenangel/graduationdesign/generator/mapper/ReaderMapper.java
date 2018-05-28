@@ -44,4 +44,8 @@ public interface ReaderMapper {
 
     @Delete("delete from readers where id = #{id}")
     int delete(@Param("id") Integer id);
+
+    @Update("update readers set password = #{password} where id = #{id}")
+    int updatepassword(@Param("id") Integer id,
+                       @Param("password") String password);
 }

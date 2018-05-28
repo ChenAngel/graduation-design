@@ -29,4 +29,7 @@ public interface ReaderService {
     public List<BorrowHistory> searchHistoryById(Integer readerid);
 
     public Reader searchInfoById(Integer readerid);
+
+    public boolean resetps(Integer id,String password);
+
 }

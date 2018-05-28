@@ -76,4 +76,9 @@ public class ReaderServiceImpl implements ReaderService{
     public Reader searchInfoById(Integer readerid) {
         return readerMapper.selectbyid(readerid);
     }
+
+    @Override
+    public boolean resetps(Integer id, String password) {
+        return readerMapper.updatepassword(id,password)!=0;
+    }
 }

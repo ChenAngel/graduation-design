@@ -24,4 +24,7 @@ public interface OrderMapper {
 
     @Select("select * from orders where order_rid = #{rid}")
     List<Order> selectbyrid(@Param("rid")Integer rid);
+
+    @Select("select * from orders where order_rid = #{rid} and status = 'borrowing'")
+    List<Order> selectbyidandstatus(@Param("rid")Integer rid);
 }

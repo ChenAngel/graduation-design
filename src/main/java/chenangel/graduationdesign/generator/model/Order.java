@@ -8,6 +8,7 @@ public class Order {
     private String status;
     private String addtime;
     private String bookname;
+    private String returntime;
 
     public Integer getId() {
         return id;
@@ -63,5 +64,13 @@ public class Order {
 
     public void setBookname(String bookname) {
         this.bookname = bookname;
+    }
+
+    public String getReturntime() {
+        return returntime;
+    }
+
+    public void setReturntime(String returntime) {
+        this.returntime = returntime;
     }
 }
