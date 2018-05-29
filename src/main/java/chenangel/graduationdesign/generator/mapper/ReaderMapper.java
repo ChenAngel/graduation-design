@@ -48,4 +48,8 @@ public interface ReaderMapper {
     @Update("update readers set password = #{password} where id = #{id}")
     int updatepassword(@Param("id") Integer id,
                        @Param("password") String password);
+
+    @Select("select * from readers where ${field} = #{value}")
+    List<Reader> fieldselect(@Param("field") String field,
+                             @Param("value") String value);
 }

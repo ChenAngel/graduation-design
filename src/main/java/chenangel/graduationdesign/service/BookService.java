@@ -31,7 +31,9 @@ public interface BookService {
                               String location,
                               Integer borrowacount,
                               Integer nowaccount,
-                              Double price);
+                              Double price,
+                              Integer totalaccount,
+                              Integer id);
 
     public List<Book> fieldSearch(String field, String value);
 
@@ -42,4 +44,10 @@ public interface BookService {
     public Map typeCount();
 
     public List<Map> hotestbookTop10();
+
+    public boolean borrowbook(Integer bid,Integer rid,String uuid,Integer aid);
+
+    public Book searchByName(String bookname);
+
+    public boolean returnbook(Integer bid,Integer rid,String uuid,Integer aid);
 }

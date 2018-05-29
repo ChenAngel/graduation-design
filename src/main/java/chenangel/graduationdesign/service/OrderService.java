@@ -13,4 +13,8 @@ public interface OrderService {
     public List<Order> searchNowBorrow(Integer rid);
 
     public Map rencentBorrow();
+
+    public boolean delByUuid(String uuid);
+
+    public Order findByRidandBookname(Integer rid,String bookname);
 }

@@ -33,8 +33,8 @@ public interface BookMapper {
     @Delete("delete from books where bookname = #{bookname}")
     int delbyname(@Param("bookname") String bookname);
 
-    @Update("update books set bookname = #{bookname},type = #{type},writer = #{writer},press = #{press},pressdate = #{pressdate},remark = #{remark},price = #{price},borrowacount = #{borrowacount},nowaccount = #{nowaccount},location = #{location}" +
-            "where isbn = #{isbn}")
+    @Update("update books set bookname = #{bookname},type = #{type},writer = #{writer},press = #{press},pressdate = #{pressdate},remark = #{remark},price = #{price},borrowacount = #{borrowacount},nowaccount = #{nowaccount},location = #{location},totalaccount = #{totalaccount},isbn = #{isbn}" +
+            "where id = #{id}")
     int updatebook(@Param("bookname") String bookname,
                    @Param("type") String type,
                    @Param("writer") String writer,
@@ -44,7 +44,9 @@ public interface BookMapper {
                    @Param("isbn") String isbn,
                    @Param("location") String location,
                    @Param("borrowacount") Integer borrowacount,
+                   @Param("totalaccount") Integer totalaccount,
                    @Param("nowaccount") Integer nowaccount,
+                   @Param("id") Integer id,
                    @Param("price") Double price);
 
     @Select("select * from books where ${field} = #{value}")

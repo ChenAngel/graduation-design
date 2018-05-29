@@ -73,12 +73,17 @@ public class ReaderServiceImpl implements ReaderService{
     }
 
     @Override
-    public Reader searchInfoById(Integer readerid) {
-        return readerMapper.selectbyid(readerid);
+    public Reader searchInfoById(String readerid) {
+        return readerMapper.selectbynameid(readerid);
     }
 
     @Override
     public boolean resetps(Integer id, String password) {
         return readerMapper.updatepassword(id,password)!=0;
+    }
+
+    @Override
+    public List<Reader> fieldSearch(String field, String value) {
+        return readerMapper.fieldselect(field, value);
     }
 }

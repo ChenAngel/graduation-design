@@ -1,6 +1,8 @@
 package chenangel.graduationdesign.service.impl;
 
 import chenangel.graduationdesign.generator.mapper.BookMapper;
+import chenangel.graduationdesign.generator.mapper.HistoryMapper;
+import chenangel.graduationdesign.generator.mapper.OrderMapper;
 import chenangel.graduationdesign.generator.model.Book;
 import chenangel.graduationdesign.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,10 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookMapper bookMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private HistoryMapper historyMapper;
 
     @Override
     public boolean addBook(String bookname, String type, String writer, String press, String pressdate, String remark, String isbn, String location, Integer borrowacount, Integer nowaccount, Integer totalaccount, Double price) {
@@ -27,8 +33,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean changeBook(String bookname, String type, String writer, String press, String pressdate, String remark, String isbn, String location, Integer borrowacount, Integer nowaccount, Double price) {
-        return bookMapper.updatebook(bookname, type, writer, press, pressdate, remark, isbn, location, borrowacount, nowaccount, price)==1;
+    public boolean changeBook(String bookname, String type, String writer, String press, String pressdate, String remark, String isbn, String location, Integer borrowacount, Integer nowaccount, Double price,Integer totalaccount,Integer id) {
+        return bookMapper.updatebook(bookname, type, writer, press, pressdate, remark, isbn, location, borrowacount,totalaccount, nowaccount, id,price)==1;
     }
 
     @Override
@@ -65,5 +71,37 @@ public class BookServiceImpl implements BookService {
     public List<Map> hotestbookTop10() {
         List<Map> mapList = bookMapper.hotestTop10();
         return mapList;
+    }
+
+    @Override
+    public boolean borrowbook(Integer bid, Integer rid, String uuid,Integer aid) {
+        String status = "borrowing";
+        int sign1 = orderMapper.updateorder(uuid,status,aid);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String addtime = simpleDateFormat.format(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH,+1);
+        String returntime = simpleDateFormat.format(calendar.getTime());
+        int sign2 = historyMapper.insertrecord(bid,rid,addtime,returntime);
+        return sign1==1&&sign2==1;
+    }
+
+    @Override
+    public Book searchByName(String bookname) {
+        return bookMapper.fieldselect("bookname",bookname).get(0);
+    }
+
+    @Override
+    public boolean returnbook(Integer bid, Integer rid, String uuid, Integer aid) {
+        String status = "ok";
+        int sign1 = orderMapper.updateorder(uuid,status,aid);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH,+1);
+        String returntime = simpleDateFormat.format(calendar.getTime());
+        int sign2 = historyMapper.insertrecord(bid,rid,"before",returntime);
+        return sign1==1&&sign2==1;
     }
 }

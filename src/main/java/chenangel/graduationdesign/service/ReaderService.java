@@ -28,8 +28,9 @@ public interface ReaderService {
 
     public List<BorrowHistory> searchHistoryById(Integer readerid);
 
-    public Reader searchInfoById(Integer readerid);
+    public Reader searchInfoById(String readerid);
 
     public boolean resetps(Integer id,String password);
 
+    public List<Reader> fieldSearch(String field,String value);
 }

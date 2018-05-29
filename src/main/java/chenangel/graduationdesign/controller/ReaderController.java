@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import untils.ScriptUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/reader")
@@ -88,4 +90,17 @@ public class ReaderController {
         List<Order> orders = orderService.searchNowBorrow((Integer) MySession.getAttr("rid"));
         return orders;
     }
+
+    @RequestMapping(value = "/{field}/{value}/fieldsearch", method = RequestMethod.POST)
+    @ResponseBody
+    public Map fieldsearch(@PathVariable("field")String field,
+                           @PathVariable("value")String value) throws Exception{
+        Map result = new HashMap();
+        List<Reader> readers = readerService.fieldSearch(field, value);
+        result.put("readerlist",readers);
+        result.put("size",readers.size());
+        return result;
+    }
+
+
 }

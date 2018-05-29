@@ -87,4 +87,14 @@ public class OrderServiceImpl implements OrderService {
         result.put("countlist",totalList);
         return result;
     }
+
+    @Override
+    public boolean delByUuid(String uuid) {
+        return orderMapper.delbyuuid(uuid)==1;
+    }
+
+    @Override
+    public Order findByRidandBookname(Integer rid, String bookname) {
+        return orderMapper.selectbyridbookname(rid, bookname);
+    }
 }

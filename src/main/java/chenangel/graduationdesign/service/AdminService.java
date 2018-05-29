@@ -2,7 +2,7 @@ package chenangel.graduationdesign.service;
 
 
 public interface AdminService {
-    public boolean login(String adminname, String password);
+    public Integer login(String adminname, String password);
 
     /*public int delReader(String id);
 

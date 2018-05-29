@@ -12,7 +12,7 @@ public class AdminServiceImpl implements AdminService {
     private AdminMapper adminMapper;
 
     @Override
-    public boolean login(String adminname, String password) {
-        return adminMapper.check(adminname, password)!=null&&adminMapper.check(adminname, password)!=0;
+    public Integer login(String adminname, String password) {
+        return adminMapper.check(adminname, password);
     }
 }

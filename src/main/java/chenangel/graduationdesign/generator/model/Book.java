@@ -13,6 +13,8 @@ public class Book {
     private String location;
     private Integer borrowacount;
     private Integer nowaccount;
+    private String addtime;
+    private Integer totalaccount;
 
     public Integer getId() {
         return id;
@@ -108,5 +110,21 @@ public class Book {
 
     public void setNowaccount(Integer nowaccount) {
         this.nowaccount = nowaccount;
+    }
+
+    public String getAddtime() {
+        return addtime;
+    }
+
+    public void setAddtime(String addtime) {
+        this.addtime = addtime;
+    }
+
+    public Integer getTotalaccount() {
+        return totalaccount;
+    }
+
+    public void setTotalaccount(Integer totalaccount) {
+        this.totalaccount = totalaccount;
     }
 }

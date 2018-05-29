@@ -1,5 +1,6 @@
 package chenangel.graduationdesign.controller;
 
+import chenangel.graduationdesign.admin.MySession;
 import chenangel.graduationdesign.service.AdminService;
 import chenangel.graduationdesign.service.BookService;
 import chenangel.graduationdesign.service.OrderService;
@@ -29,8 +30,9 @@ public class AdminController {
     @ResponseBody
     public String login(@PathVariable("adminname")String adminname,
                         @PathVariable("password")String password){
-        boolean sign = adminService.login(adminname, password);
-        if (sign) {
+        Integer aid = adminService.login(adminname, password);
+        MySession.setAttr("aid",aid);
+        if (aid!=null) {
             return "登录成功";
         }else{
             return "登录失败，账号或者密码错误";
