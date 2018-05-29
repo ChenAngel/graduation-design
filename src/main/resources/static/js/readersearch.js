@@ -48,7 +48,7 @@ $(document).ready(function(){
                 data.readerlist.forEach(warcforeachprint);
                 total.innerText = "共" + data.size + "条结果";
                 result.html(html);
-                yuyue();
+                caozuo();
             });
         }
 
@@ -64,21 +64,41 @@ $(document).ready(function(){
             "                            <th>" + data.readername + "</th>" +
             "                            <th>" + data.identification + "</th>" +
             "                            <th>" + data.readerclass + "</th>" +
-            "                            <th><button type='button' class='btn btn-primary' id='" + data.id + "'>详情</button></th>" +
+            "                            <th><button type='button' class='btn btn-primary' id='" + data.id + "guihuan'>借阅详情</button>" +
+            "                            <button type='button' class='btn btn-primary' id='" + data.id + "xiugai' data-toggle='modal' data-target='#changeinfo'>修改</button></th>" +
             "                        </tr>";
     }
 
-    function yuyue() {
-        var url = "http://localhost:8080/book/";
+    function caozuo() {
+        var url = "http://localhost:8080/reader/";
         $("#resulttable th button").on('click',function (e) {
-            url = url + $(e.target).attr("id") + "/yuyue";
-            $.post(url,{},function(data){
-                if (data=="预约失败"){
-                    alert(data);
-                }else{
-                    alert("预约成功，你的预约号是"+data);
-                }
-            },"text");
+            var id = $(e.target).attr("id");
+            var value = id.replace(/[^0-9]/ig,"");
+            if (id.indexOf("guihuan")!=-1){
+
+            }else if (id.indexOf("xiugai")!=-1){
+                var xiugai = url  + value + "/searchbyid";
+                var readerid = $("#readerid");
+                var password = $("#password");
+                var readername = $("#readername");
+                var readerclass = $("#readerclass");
+                var tel = $("#tel");
+                var sex = $("#sex");
+                var birthday = $("#birthday");
+                var identification = $("#identification");
+                $.post(xiugai,{},function(data){
+                    readerid.val(data.readerid);
+                    password.val(data.password);
+                    readername.val(data.readername);
+                    readerclass.val(data.readerclass);
+                    tel.val(data.tel);
+                    sex.val(data.sex);
+                    birthday.val(data.birthday);
+                    identification.val(data.identification);
+                    $("#hidval").val(data.id);
+                });
+            }
+
         });
     }
 

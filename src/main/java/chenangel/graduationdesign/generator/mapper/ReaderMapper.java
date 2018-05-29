@@ -14,14 +14,14 @@ public interface ReaderMapper {
     @Select("select * from readers")
     List<Reader> selectall();
 
-    @Update("update readers set readername = #{readername},readerclass = #{readerclass},borrowhistory = #{borrowhistory},sex = #{sex},password = #{password},birthday = #{birthday},identification = #{identification},tel = #{tel} where readerid = #{readerid}")
+    @Update("update readers set readername = #{readername},readerclass = #{readerclass},sex = #{sex},password = #{password},birthday = #{birthday},identification = #{identification},tel = #{tel}, readerid = #{readerid} where id = #{id}")
     int updateinfo(@Param("readerid") String readerid,
                    @Param("readername") String readername,
                    @Param("readerclass") String readerclass,
-                   @Param("borrowhistory") String borrowhistory,
                    @Param("birthday") String birthday,
                    @Param("identification") String identification,
                    @Param("tel") String tel,
+                   @Param("id") Integer id,
                    @Param("sex") String sex,
                    @Param("password") String password);
 
@@ -52,4 +52,5 @@ public interface ReaderMapper {
     @Select("select * from readers where ${field} = #{value}")
     List<Reader> fieldselect(@Param("field") String field,
                              @Param("value") String value);
+
 }

@@ -33,4 +33,14 @@ public interface ReaderService {
     public boolean resetps(Integer id,String password);
 
     public List<Reader> fieldSearch(String field,String value);
+
+    public boolean changeinfo( Integer id,
+                               String readerid,
+                               String password,
+                               String readername,
+                               String readerclass,
+                               String sex,
+                               String birthday,
+                               String identification,
+                               String tel);
 }

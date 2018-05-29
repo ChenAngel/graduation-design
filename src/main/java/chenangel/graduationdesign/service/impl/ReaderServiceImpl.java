@@ -86,4 +86,9 @@ public class ReaderServiceImpl implements ReaderService{
     public List<Reader> fieldSearch(String field, String value) {
         return readerMapper.fieldselect(field, value);
     }
+
+    @Override
+    public boolean changeinfo(Integer id, String readerid, String password, String readername, String readerclass,  String sex, String birthday, String identification, String tel) {
+        return readerMapper.updateinfo(readerid,readername,readerclass,birthday,identification,tel,id,sex,password)==1;
+    }
 }

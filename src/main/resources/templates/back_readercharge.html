@@ -92,7 +92,7 @@
                             <th>学生姓名</th>
                             <th>身份证号</th>
                             <th>学生所属</th>
-                            <th >操作</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="resulttable">
@@ -104,6 +104,10 @@
     </div>
     <hr/>
     <div class="row">
+        <div align="center">
+            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">批量新增用户</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#delreader">删除用户</button>
+        </div>
         <br>
         <div align="center"><label class="label label-info" id="total">共 条结果</label></div>
         <div align="center"><ul class="pagination" id="fenye">
@@ -175,51 +179,39 @@
     </div>
 </div>
 
-<!--修改图书框-->
+<!--修改用户框-->
 <div class="modal fade" id="changeinfo" tabindex="-1" role="dialog" aria-labelledby="change" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="change">修改图书信息</h4>
+                <h4 class="modal-title" id="change">修改读者信息</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-striped">
                     <tr>
-                        <th>书本编号:</th>
-                        <th><input type="text" id="isbn1"></th>
-                        <th>书本名:</th>
-                        <th><input type="text" id="bookname1"></th>
+                        <th>学生证号:</th>
+                        <th><input type="text" id="readerid"></th>
+                        <th>密码：</th>
+                        <th><input type="text" id="password"></th>
                     </tr>
                     <tr>
-                        <th>类型:</th>
-                        <th><input type="text" id="type1"></th>
-                        <th>作者:</th>
-                        <th><input type="text" id="writer1"></th>
+                        <th>读者名:</th>
+                        <th><input type="text" id="readername"></th>
+                        <th>读者所属:</th>
+                        <th><input type="text" id="readerclass"></th>
                     </tr>
                     <tr>
-                        <th>出版社:</th>
-                        <th><input type="text" id="press1"></th>
-                        <th>出版日期:</th>
-                        <th><input type="text" id="pressdate1"></th>
+                        <th>电话:</th>
+                        <th><input type="text" id="tel"></th>
+                        <th>性别:</th>
+                        <th><input type="text" id="sex"></th>
                     </tr>
                     <tr>
-                        <th>描述:</th>
-                        <th><input type="text" id="remark1"></th>
-                        <th>现存量:</th>
-                        <th><input type="text" id="nowaccount1"></th>
-                    </tr>
-                    <tr>
-                        <th>流通量:</th>
-                        <th><input type="text" id="borrowacount1"></th>
-                        <th>位置:</th>
-                        <th><input type="text" id="location1"></th>
-                    </tr>
-                    <tr>
-                        <th>单价:</th>
-                        <th><input type="text" id="price1"></th>
-                        <th>总存量:</th>
-                        <th><input type="text" id="totalaccount1"></th>
+                        <th>出生日期:</th>
+                        <th><input type="text" id="birthday"></th>
+                        <th>身份证号:</th>
+                        <th><input type="text" id="identification"></th>
                     </tr>
                     <input type="hidden" id="hidval">
                 </table>
@@ -232,7 +224,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="borrow" tabindex="-1" role="dialog" aria-labelledby="borrowing" aria-hidden="true">
+<div class="modal fade" id="delreader" tabindex="-1" role="dialog" aria-labelledby="borrowing" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

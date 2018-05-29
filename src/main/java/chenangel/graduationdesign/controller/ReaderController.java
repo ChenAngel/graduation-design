@@ -27,15 +27,17 @@ public class ReaderController {
     @Autowired
     private OrderService orderService;
 
+    //spring mvc设置命名空间的注解
     @RequestMapping(value = "/{readerid}/{password}/login", method = RequestMethod.POST)
+    //spring mvc设置以json形式返回返回值的注解
     @ResponseBody
-    public String yuyue(@PathVariable("readerid") String readerid,
+    public String yuyue(@PathVariable("readerid") String readerid,//取url路径中的参数
                         @PathVariable("password") String password) throws Exception{
-        Reader reader = readerService.login(readerid, password);
+        Reader reader = readerService.login(readerid, password);//使用service层的登录方法，完成对数据库等逐层的迭代操作
         if (reader!=null) {
-            MySession.setAttr("rid",reader.getId());
+            MySession.setAttr("rid",reader.getId());//以session保存用户登录状态
             MySession.setAttr("readerid",reader.getReaderid());
-            return "登录成功";
+            return "登录成功";//判定结果返回
         }else {
             return "用户名或密码错误";
         }
@@ -102,5 +104,28 @@ public class ReaderController {
         return result;
     }
 
+    @RequestMapping(value = "/changeinfo", method = RequestMethod.POST)
+    @ResponseBody
+    public String changeinfo(@RequestParam("password")String password,
+                             @RequestParam("readerid")String readerid,
+                             @RequestParam("readername")String readername,
+                             @RequestParam("readerclass")String readerclass,
+                             @RequestParam("tel")String tel,
+                             @RequestParam("sex")String sex,
+                             @RequestParam("id")Integer id,
+                             @RequestParam("birthday")String birthday,
+                             @RequestParam("identification")String identification) throws Exception{
+        boolean sign = readerService.changeinfo(id,readerid,password,readername,readerclass,sex,birthday,identification,tel);
+        if (sign) {
+            return "修改成功";
+        }else{
+            return "修改失败，未知错误";
+        }
+    }
 
+    @RequestMapping(value = "/{id}/searchbyid", method = RequestMethod.POST)
+    @ResponseBody
+    public Reader searchbyid(@PathVariable("id")Integer id) throws Exception{
+        return readerService.searchById(id);
+    }
 }
