@@ -24,3 +24,23 @@ $("#querenxiugai").click(function () {
     });
 
 })
+
+$("#querenreturn").click(function () {
+    var url = "http://localhost:8080/reader/returnback";
+    var readerid = $("#readerid").val();
+    var id = $("#hidval").val();
+    $.post(url,{
+        readerid:readerid,
+        password:password,
+        readername:readername,
+        readerclass:readerclass,
+        tel:tel,
+        sex:sex,
+        birthday:birthday,
+        identification:identification,
+        id:id
+    },function(data){
+        alert(data);
+    });
+
+})

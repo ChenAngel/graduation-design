@@ -1,6 +1,7 @@
 package chenangel.graduationdesign.service;
 
 import chenangel.graduationdesign.generator.model.BorrowHistory;
+import chenangel.graduationdesign.generator.model.Order;
 import chenangel.graduationdesign.generator.model.Reader;
 
 import java.util.List;
@@ -43,4 +44,8 @@ public interface ReaderService {
                                String birthday,
                                String identification,
                                String tel);
+
+    public boolean returnbook(Integer bid,Integer rid,Integer aid);
+
+    public List<BorrowHistory> searchhistorybyreaderid(Integer rid);
 }

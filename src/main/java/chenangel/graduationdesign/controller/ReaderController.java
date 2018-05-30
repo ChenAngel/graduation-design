@@ -2,6 +2,7 @@ package chenangel.graduationdesign.controller;
 
 import chenangel.graduationdesign.admin.MySession;
 import chenangel.graduationdesign.generator.mapper.BookMapper;
+import chenangel.graduationdesign.generator.model.Book;
 import chenangel.graduationdesign.generator.model.BorrowHistory;
 import chenangel.graduationdesign.generator.model.Order;
 import chenangel.graduationdesign.generator.model.Reader;
@@ -127,5 +128,33 @@ public class ReaderController {
     @ResponseBody
     public Reader searchbyid(@PathVariable("id")Integer id) throws Exception{
         return readerService.searchById(id);
+    }
+
+    @RequestMapping(value = "/returnback", method = RequestMethod.POST)
+    @ResponseBody
+    public String searchbyid(@RequestParam("bid")Integer bid,
+                             @RequestParam("readerid")String readerid) throws Exception{
+        Integer aid = (Integer) MySession.getAttr("aid");
+        Reader reader = readerService.searchInfoById(readerid);
+        boolean sign = readerService.returnbook(bid,reader.getId(),aid);
+        if (sign) {
+            return "归还成功";
+        }else{
+            return "归还失败，未知错误";
+        }
+    }
+
+    @RequestMapping(value = "/saerchorderbyrid", method = RequestMethod.POST)
+    @ResponseBody
+    public List<BorrowHistory> searchbyrid(@RequestParam("rid")Integer rid) throws Exception{
+        List<BorrowHistory> borrowHistories = readerService.searchhistorybyreaderid(rid);
+        return borrowHistories;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public String logout() throws Exception{
+        MySession.removeAttr("rid");
+        return "注销成功";
     }
 }

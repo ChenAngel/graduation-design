@@ -1,9 +1,12 @@
 package chenangel.graduationdesign.service.impl;
 
 import chenangel.graduationdesign.generator.mapper.HistoryMapper;
+import chenangel.graduationdesign.generator.mapper.OrderMapper;
 import chenangel.graduationdesign.generator.mapper.ReaderMapper;
+import chenangel.graduationdesign.generator.model.Book;
 import chenangel.graduationdesign.generator.model.BorrowHistory;
 import chenangel.graduationdesign.generator.model.Reader;
+import chenangel.graduationdesign.service.BookService;
 import chenangel.graduationdesign.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,10 @@ public class ReaderServiceImpl implements ReaderService{
     private ReaderMapper readerMapper;
     @Autowired
     private HistoryMapper historyMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private BookService bookService;
 
     @Override
     public Reader login(String readerid, String password) {
@@ -90,5 +97,19 @@ public class ReaderServiceImpl implements ReaderService{
     @Override
     public boolean changeinfo(Integer id, String readerid, String password, String readername, String readerclass,  String sex, String birthday, String identification, String tel) {
         return readerMapper.updateinfo(readerid,readername,readerclass,birthday,identification,tel,id,sex,password)==1;
+    }
+
+    @Override
+    public boolean returnbook(Integer bid, Integer rid, Integer aid) {
+        Book book = bookService.searchById(bid);
+        String uuid = orderMapper.selectbyridbookname(rid,book.getBookname()).getOrder_uuid();
+        Boolean sign1 = orderMapper.updateorder(uuid,"ok",aid)==1;
+        Boolean sign2 = bookService.changeBook(book.getBookname(),book.getType(),book.getWriter(),book.getPress(),book.getPressdate(),book.getRemark(),book.getIsbn(),book.getLocation(),book.getBorrowacount(),book.getNowaccount()+1,book.getPrice(),book.getTotalaccount(),book.getId());
+        return sign1&&sign2;
+    }
+
+    @Override
+    public List<BorrowHistory> searchhistorybyreaderid(Integer rid) {
+        return historyMapper.selectbyrid(rid);
     }
 }

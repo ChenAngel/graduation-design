@@ -50,4 +50,6 @@ public interface BookService {
     public Book searchByName(String bookname);
 
     public boolean returnbook(Integer bid,Integer rid,String uuid,Integer aid);
+
+    public List<Book> push();
 }

@@ -64,7 +64,7 @@ $(document).ready(function(){
             "                            <th>" + data.readername + "</th>" +
             "                            <th>" + data.identification + "</th>" +
             "                            <th>" + data.readerclass + "</th>" +
-            "                            <th><button type='button' class='btn btn-primary' id='" + data.id + "guihuan'>借阅详情</button>" +
+            "                            <th><button type='button' class='btn btn-primary' id='" + data.id + "guihuan' data-toggle='modal' data-target='#detail' >借阅详情</button>" +
             "                            <button type='button' class='btn btn-primary' id='" + data.id + "xiugai' data-toggle='modal' data-target='#changeinfo'>修改</button></th>" +
             "                        </tr>";
     }
@@ -75,6 +75,15 @@ $(document).ready(function(){
             var id = $(e.target).attr("id");
             var value = id.replace(/[^0-9]/ig,"");
             if (id.indexOf("guihuan")!=-1){
+                $("#hidval").val(value);
+                var guihuan = url + "saerchorderbyrid";
+                $.post(guihuan,{
+                    rid:value
+                },function(data){
+                    data.forEach(printhistory);
+
+                });
+
 
             }else if (id.indexOf("xiugai")!=-1){
                 var xiugai = url  + value + "/searchbyid";
@@ -101,6 +110,15 @@ $(document).ready(function(){
 
         });
     }
-
+    
+    function printhistory(data) {
+        var html = "<tr>"+
+            "<th>书本名</th>" +
+            "<th>" + data.bookname + "</th>" +
+            "<th>归还时间</th>" +
+            "<th>" + data.returntime + "</th>" +
+            "<th><button type='button' class='btn btn-primary' id='guihuan" + data.books_id + "guihuan'>归还</button></th></tr>";
+        $("#tbody").append(html);
+    }
 
 });

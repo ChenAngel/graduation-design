@@ -1,7 +1,7 @@
 $("#logout").click(function () {
-    var url = "http://localhost:8080/userlogout";
+    var url = "http://localhost:8080/reader/logout";
     $.post(url,{},function(data){
         alert(data);
-        window.location.href = "index.html";
+        window.location.href = "userlogin.html";
     });
 })

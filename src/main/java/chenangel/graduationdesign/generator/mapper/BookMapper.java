@@ -1,6 +1,7 @@
 package chenangel.graduationdesign.generator.mapper;
 
 import chenangel.graduationdesign.generator.model.Book;
+import chenangel.graduationdesign.generator.model.Typecount;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -61,4 +62,10 @@ public interface BookMapper {
 
     @Select("select isbn,bookname,writer,borrowacount from books order by borrowacount desc limit 0,10")
     List<Map> hotestTop10();
+
+    @Select("select sum(borrowacount) from books")
+    Long allborrowacount();
+
+    @Select("select type,sum(borrowacount) as total from books group by type")
+    List<Typecount> typeaccount();
 }

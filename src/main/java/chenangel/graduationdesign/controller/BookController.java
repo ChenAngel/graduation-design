@@ -180,5 +180,13 @@ public class BookController {
             return "归还操作出错，未知错误";
         }
     }
+
+    @RequestMapping(
+            value = {"/push"},
+            produces = {"application/json"}
+    )
+    public List<Book> push() {
+        return bookService.push();
+    }
 }
 

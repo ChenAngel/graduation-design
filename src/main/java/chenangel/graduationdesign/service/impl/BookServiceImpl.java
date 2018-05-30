@@ -4,9 +4,11 @@ import chenangel.graduationdesign.generator.mapper.BookMapper;
 import chenangel.graduationdesign.generator.mapper.HistoryMapper;
 import chenangel.graduationdesign.generator.mapper.OrderMapper;
 import chenangel.graduationdesign.generator.model.Book;
+import chenangel.graduationdesign.generator.model.Typecount;
 import chenangel.graduationdesign.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import untils.Kmaens;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -103,5 +105,22 @@ public class BookServiceImpl implements BookService {
         String returntime = simpleDateFormat.format(calendar.getTime());
         int sign2 = historyMapper.insertrecord(bid,rid,"before",returntime);
         return sign1==1&&sign2==1;
+    }
+
+    @Override
+    public List<Book> push() {
+        Kmaens kmaens = new Kmaens();
+        List<Typecount> typecounts = bookMapper.typeaccount();
+        Map<String,Integer> map = new HashMap();
+        for (Typecount typemap:typecounts) {
+            map.put(typemap.getType(),typemap.getTotal());
+        }
+        List<Integer> idlist = kmaens.getPopularBookId(bookMapper.selectall(),bookMapper.allborrowacount(),map);
+        List<Book> pushlist = new LinkedList<>();
+        for (Integer id:idlist) {
+            Book book = bookMapper.selectbyid(id);
+            pushlist.add(book);
+        }
+        return pushlist;
     }
 }
