@@ -61,7 +61,7 @@
     $("#login").click(function(){
         var username = document.getElementById("inputEmail").value;
         var password = document.getElementById("inputPassword").value;
-        var url = "http://localhost:8080/" + username + "/" + password + "/adminlogin";
+        var url = "http://localhost:8080/admin/" + username + "/" + password + "/login";
         $.post(url,{},
             function(data){
                 if (data=="登录成功"){

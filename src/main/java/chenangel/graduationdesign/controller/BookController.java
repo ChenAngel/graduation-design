@@ -129,11 +129,12 @@ public class BookController {
         return map;
     }
 
-    @RequestMapping(value = "/{id}/yuyue",method = RequestMethod.POST)
-    public String yuyue(@PathVariable("id") Integer bid) throws Exception{
-        Integer rid = (Integer) MySession.getAttr("rid");
-        String uuid = orderService.yuyue(rid,bid);
-        if (uuid!=null) {
+    //预约controller
+    @RequestMapping(value = "/{id}/yuyue",method = RequestMethod.POST)//只允许post形式访问，返回json格式数据
+    public String yuyue(@PathVariable("id") Integer bid) throws Exception{//路径取参
+        Integer rid = (Integer) MySession.getAttr("rid");//从session中获取当前登录的读者ID
+        String uuid = orderService.yuyue(rid,bid);//操作业务逻辑层的预约方法
+        if (uuid!=null) {//结果返回，成功返回预约单号，失败则返回预约失败
             return uuid;
         }else {
             return "预约失败";
