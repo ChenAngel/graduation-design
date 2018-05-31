@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReaderService {
     public Reader login(String readerid,String password);
 
-    public boolean addReader(String filepath,String filename);
+    public boolean addReader(List<Reader> readers);
 
     public boolean regist(String readerid,
                           String readername,

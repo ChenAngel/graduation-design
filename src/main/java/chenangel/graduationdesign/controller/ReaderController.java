@@ -17,14 +17,18 @@ import jxl.write.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import untils.FileUtil;
 import untils.ScriptUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/reader")
@@ -140,10 +144,10 @@ public class ReaderController {
 
     @RequestMapping(value = "/returnback", method = RequestMethod.POST)
     @ResponseBody
-    public String searchbyid(@RequestParam("bid")Integer bid,
-                             @RequestParam("readerid")String readerid) throws Exception{
+    public String returnbook(@RequestParam("bid")Integer bid,
+                             @RequestParam("rid")Integer rid) throws Exception{
         Integer aid = (Integer) MySession.getAttr("aid");
-        Reader reader = readerService.searchInfoById(readerid);
+        Reader reader = readerService.searchById(rid);
         boolean sign = readerService.returnbook(bid,reader.getId(),aid);
         if (sign) {
             return "归还成功";
@@ -166,50 +170,31 @@ public class ReaderController {
         return "注销成功";
     }
 
-    @RequestMapping("/addreaderbyexcel")
+    @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
     @ResponseBody
-    public String addreaderbyexcel(@RequestParam("")){
-        jxl.Workbook readwb = null;
-        try
-        {
-            //构建Workbook对象, 只读Workbook对象
-            //直接从本地文件创建Workbook
-            InputStream instream = new FileInputStream("F:/红楼人物.xls");
-            readwb = Workbook.getWorkbook(instream);
-            //Sheet的下标是从0开始
-            //获取第一张Sheet表
-            Sheet readsheet = readwb.getSheet(0);
-            //获取Sheet表中所包含的总列数
-            int rsColumns = readsheet.getColumns();
-            //获取Sheet表中所包含的总行数
-            int rsRows = readsheet.getRows();
-            //获取指定单元格的对象引用
-            for (int i = 0; i < rsRows; i++) {
-                for (int j = 0; j < rsColumns; j++) {
-                    Cell cell = readsheet.getCell(j, i);
-                    System.out.print(cell.getContents() + " ");
-                }
-                System.out.println();
-            }
-            //利用已经创建的Excel工作薄,创建新的可写入的Excel工作薄
-            jxl.write.WritableWorkbook wwb = Workbook.createWorkbook(new File(
-                    "F:/红楼人物1.xls"), readwb);
-            //读取第一张工作表
-            jxl.write.WritableSheet ws = wwb.getSheet(0);
-            //获得第一个单元格对象
-            jxl.write.WritableCell wc = ws.getWritableCell(0, 0);
-            //判断单元格的类型, 做出相应的转化
-            if (wc.getType() == CellType.LABEL) {
-                Label l = (Label) wc;
-                l.setString("新姓名");
-            }
-            //写入Excel对象
-            wwb.write();
-            wwb.close();
+    public String uploadWarcFile(@RequestParam("pic") MultipartFile file,
+                                 HttpServletRequest request){
+
+        String contentType = file.getContentType();
+        String fileName = UUID.randomUUID() + file.getOriginalFilename();
+        String originalname = file.getOriginalFilename();
+        String filePath = request.getSession().getServletContext().getRealPath("uploadfile/");
+        boolean sign = false;
+        try {
+            FileUtil.uploadFile(file.getBytes(),filePath, fileName);
+            List<Reader> readers = FileUtil.addreaderbyexcel(filePath + "/" + fileName);
+            sign = readerService.addReader(readers);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            readwb.close();
+            return "fail to upload";
         }
+
+        //返回json
+        if (sign) {
+            return "上传成功且保存完毕";
+        }else{
+            return "保存失败，未知错误";
+        }
+
     }
 }

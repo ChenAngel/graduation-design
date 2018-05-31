@@ -1,12 +1,12 @@
 $("#uploadfile").click(function () {
     $("#fileTypeError").html('');
     var fileName = $('#file_upload').val();　　　　　　　　　　　　　　　　　　//获得文件名称
-    var fileType = fileName.substr(fileName.length-5,fileName.length);　　//截取文件类型,如(.xls)
-    if (fileType=='.warc'){
+    var fileType = fileName.substr(fileName.length-4,fileName.length);　　//截取文件类型,如(.xls)
+    if (fileType=='.xls'){
         $("#fileTypeError").html('');
         // $("#uploadfile").removeClass("disabled");
         $.ajax({
-            url: 'http://localhost:8080/uploadfile',　　　　　　　　　　//上传地址
+            url: 'http://localhost:8080/reader/uploadfile',　　　　　　　　　　//上传地址
             type: 'POST',
             cache: false,
             data: new FormData($('#uploadForm')[0]),　　　　　　　　　　　　　//表单数据
@@ -20,9 +20,7 @@ $("#uploadfile").click(function () {
             }
         });
     }else{
-        $("#fileTypeError").html('*上传文件类型错误,支持类型: .warc');
+        $("#fileTypeError").html('*上传文件类型错误,支持类型: .xls');
         // $("#uploadfile").addClass("disabled");
     }
 })
-
-

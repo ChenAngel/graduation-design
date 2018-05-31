@@ -81,10 +81,7 @@ $(document).ready(function(){
                     rid:value
                 },function(data){
                     data.forEach(printhistory);
-
                 });
-
-
             }else if (id.indexOf("xiugai")!=-1){
                 var xiugai = url  + value + "/searchbyid";
                 var readerid = $("#readerid");
@@ -117,7 +114,7 @@ $(document).ready(function(){
             "<th>" + data.bookname + "</th>" +
             "<th>归还时间</th>" +
             "<th>" + data.returntime + "</th>" +
-            "<th><button type='button' class='btn btn-primary' id='guihuan" + data.books_id + "guihuan'>归还</button></th></tr>";
+            "<th><button type='button' class='btn btn-primary' name='" + data.books_id + "' onclick='alert(\"操作成功，已归还\");window.location.href=\"back_readercharge.html\"'>归还</button></th></tr>";
         $("#tbody").append(html);
     }
 

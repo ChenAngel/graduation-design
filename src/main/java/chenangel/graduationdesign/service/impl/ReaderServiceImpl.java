@@ -31,13 +31,16 @@ public class ReaderServiceImpl implements ReaderService{
 
     /**
      * 本方法用于xml或者excel入库
-     * @param filepath
-     * @param filename
+     * @param readers
      * @return
      */
     @Override
-    public boolean addReader(String filepath, String filename) {
-        return false;
+    public boolean addReader(List<Reader> readers) {
+        Integer count = 0;
+        for (Reader reader:readers) {
+            count += readerMapper.insertreader(reader.getReaderid(),reader.getReadername(),reader.getReaderclass(),reader.getBorrowhistory(),reader.getBirthday(),reader.getIdentification(),reader.getTel(),reader.getSex(),reader.getPassword());
+        }
+        return count==readers.size();
     }
 
     /**
@@ -110,6 +113,10 @@ public class ReaderServiceImpl implements ReaderService{
 
     @Override
     public List<BorrowHistory> searchhistorybyreaderid(Integer rid) {
-        return historyMapper.selectbyrid(rid);
+        List<BorrowHistory> borrowHistoryList = historyMapper.selectbyrid(rid);
+        for (BorrowHistory history:borrowHistoryList) {
+            history.setBookname(bookService.searchById(history.getBooks_id()).getBookname());
+        }
+        return borrowHistoryList;
     }
 }
